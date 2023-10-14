@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +33,8 @@ public class ExpenseService {
     }
 
     public void removeExpenseById(Long id) {
-        expenseRepository.deleteById(id);
+        Expense ex = getExpenseById(id);
+        expenseRepository.delete(ex);
     }
 
     public void addExpense(Expense ex) {
@@ -40,7 +42,35 @@ public class ExpenseService {
     }
 
     public void modifyExpense(Expense expense, Long id) {
+      Expense exists = getExpenseById(id);
+      exists.setName(expense.getName() != null ? expense.getName() : exists.getName());
+      exists.setDescription(expense.getDescription() != null ? expense.getDescription() : exists.getDescription());
+      exists.setCategory(expense.getCategory() != null ? expense.getCategory() : exists.getCategory());
+      exists.setAmount(expense.getAmount() != 0 ? expense.getAmount() : exists.getAmount());
+      exists.setDate(expense.getDate() != null ? expense.getDate() : exists.getDate());
        expenseRepository.save(expense);
 
+    }
+
+    public List<Expense> getExpenseByCategory(String category) {
+        List<Expense> e =  expenseRepository.findByCategory(category);
+        if(e.isEmpty()){
+            throw new ExpenseNotFoundException("No expense found for this category "+category);
+        }
+        return e;
+    }
+
+    public List<Expense> readExpenseByName(String name){
+        return expenseRepository.findByNameContaining(name);
+    }
+
+    public List<Expense> getExpensesFromDate(Date start, Date end) {
+        if(start ==null){
+        start = new Date(0);
+        }
+        if(end ==null){
+            end = new Date(System.currentTimeMillis());
+        }
+        return expenseRepository.findByDateBetween(start,end);
     }
 }

@@ -1,6 +1,8 @@
 package com.example.Expense.Tracker.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +22,11 @@ public class Expense {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String expense_name;
+    @NotNull(message = "Expense Name cannot be empty")
+    @Size(min = 3,message = "Name must contain atleast 3 character's")
+    private String name;
     private String description;
-    private int expense_amount;
+    private int amount;
     private String category;
     private Date date;
 
