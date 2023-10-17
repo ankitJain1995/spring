@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(ExpenseNotFoundException.class)
-    public ResponseEntity<ErrorObject> handleExpenseNotFoundException(ExpenseNotFoundException ex, WebRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorObject> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request){
 
         ErrorObject error = new ErrorObject();
         error.setStatusCode(HttpStatus.NOT_FOUND.value());
@@ -54,6 +54,18 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         error.setTimeStamp(new Date());
 
         return new ResponseEntity<ErrorObject>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+
+    @ExceptionHandler(ItemAlreadyExistsException.class)
+    public ResponseEntity<ErrorObject> handleItemAlreadyExists(Exception ex, WebRequest request){
+
+        ErrorObject error = new ErrorObject();
+        error.setStatusCode(HttpStatus.CONFLICT.value());
+        error.setMessage(ex.getMessage());
+        error.setTimeStamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(error,HttpStatus.CONFLICT);
 
     }
 

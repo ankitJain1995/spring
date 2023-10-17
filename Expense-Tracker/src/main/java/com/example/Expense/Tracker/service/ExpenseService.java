@@ -1,16 +1,14 @@
 package com.example.Expense.Tracker.service;
 
-import com.example.Expense.Tracker.exception.ExpenseNotFoundException;
+import com.example.Expense.Tracker.exception.ResourceNotFoundException;
 import com.example.Expense.Tracker.model.Expense;
 import com.example.Expense.Tracker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +27,7 @@ public class ExpenseService {
        if(e.isPresent()){
            return e.get();
        }
-        throw new ExpenseNotFoundException("No Expense found by this id "+id);
+        throw new ResourceNotFoundException("No Expense found by this id "+id);
     }
 
     public void removeExpenseById(Long id) {
@@ -55,7 +53,7 @@ public class ExpenseService {
     public List<Expense> getExpenseByCategory(String category) {
         List<Expense> e =  expenseRepository.findByCategory(category);
         if(e.isEmpty()){
-            throw new ExpenseNotFoundException("No expense found for this category "+category);
+            throw new ResourceNotFoundException("No expense found for this category "+category);
         }
         return e;
     }
