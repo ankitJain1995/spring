@@ -15,14 +15,24 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/register")
-    public ResponseEntity<User> addUser(@Valid @RequestBody UserModel userModel){
-        return new ResponseEntity<User>(userService.addUser(userModel), HttpStatus.CREATED);
-    }
+
 
     @GetMapping("/user/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id){
         return new ResponseEntity<User>(userService.readUserById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/user/{id}")
+    public ResponseEntity<User> modifyUser(@RequestBody User user, @PathVariable Long id){
+        User muser = userService.updateUser(user,id);
+        return new ResponseEntity<User>(muser,HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/user/{id}")
+    public ResponseEntity<User> removeUserById(@PathVariable Long id){
+        userService.removeUser(id);
+        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 }
 
