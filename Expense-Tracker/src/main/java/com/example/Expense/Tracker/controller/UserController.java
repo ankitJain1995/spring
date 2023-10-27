@@ -17,21 +17,21 @@ public class UserController {
 
 
 
-    @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id){
-        return new ResponseEntity<User>(userService.readUserById(id), HttpStatus.OK);
+    @GetMapping("/user")
+    public ResponseEntity<User> getUserById(){
+        return new ResponseEntity<User>(userService.readUser(), HttpStatus.OK);
     }
 
-    @PutMapping("/user/{id}")
-    public ResponseEntity<User> modifyUser(@RequestBody User user, @PathVariable Long id){
-        User muser = userService.updateUser(user,id);
+    @PutMapping("/user")
+    public ResponseEntity<User> modifyUser(@RequestBody User user){
+        User muser = userService.updateUser(user);
         return new ResponseEntity<User>(muser,HttpStatus.OK);
     }
 
 
-    @DeleteMapping("/user/{id}")
-    public ResponseEntity<User> removeUserById(@PathVariable Long id){
-        userService.removeUser(id);
+    @DeleteMapping("/user")
+    public ResponseEntity<User> removeUserById(){
+        userService.removeUser();
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 }

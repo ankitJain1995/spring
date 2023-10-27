@@ -18,12 +18,16 @@ public class ExpenseService {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Autowired
+    private UserService userService;
+
     public Page<Expense> getAllExpenses(Pageable page){
-        return expenseRepository.findAll(page);
+
+        return expenseRepository.findByUserId(userService.getLoggedInuser().getId(),page);
     }
 
     public Expense getExpenseById(Long id) {
-     Optional<Expense> e = expenseRepository.findById(id);
+     Optional<Expense> e = expenseRepository.findByUserIdAndId(userService.getLoggedInuser().getId(), id);
        if(e.isPresent()){
            return e.get();
        }
@@ -36,6 +40,7 @@ public class ExpenseService {
     }
 
     public void addExpense(Expense ex) {
+    ex.setUser(userService.getLoggedInuser());
         expenseRepository.save(ex);
     }
 
@@ -51,7 +56,7 @@ public class ExpenseService {
     }
 
     public List<Expense> getExpenseByCategory(String category) {
-        List<Expense> e =  expenseRepository.findByCategory(category);
+        List<Expense> e =  expenseRepository.findByUserIdAndCategory(userService.getLoggedInuser().getId(), category);
         if(e.isEmpty()){
             throw new ResourceNotFoundException("No expense found for this category "+category);
         }
@@ -59,7 +64,7 @@ public class ExpenseService {
     }
 
     public List<Expense> readExpenseByName(String name){
-        return expenseRepository.findByNameContaining(name);
+        return expenseRepository.findByUserIdAndNameContaining(userService.getLoggedInuser().getId(), name);
     }
 
     public List<Expense> getExpensesFromDate(Date start, Date end) {
@@ -69,6 +74,6 @@ public class ExpenseService {
         if(end ==null){
             end = new Date(System.currentTimeMillis());
         }
-        return expenseRepository.findByDateBetween(start,end);
+        return expenseRepository.findByUserIdAndDateBetween(userService.getLoggedInuser().getId(), start,end);
     }
 }

@@ -2,10 +2,12 @@ package com.example.Expense.Tracker.config;
 
 
 import com.example.Expense.Tracker.repository.CustomUserDetailService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+@Slf4j
 @EnableWebSecurity
 @Configuration
 public class AppSecurityConfig {
@@ -38,59 +41,35 @@ SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Excepti
                      .requestMatchers("/register").permitAll()
                      .anyRequest().authenticated())
             .httpBasic(Customizer.withDefaults());
-        http.authenticationProvider(daoAuthenticationProvider());
             return http.build();
 }
 
 
 //    @Bean
-//    public UserDetailsService userDetailsService(){
-//    return new CustomUserDetailService();
+//    public DaoAuthenticationProvider daoAuthenticationProvider(){
+//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//        provider.setUserDetailsService(customUserDetailService);
+//        provider.setPasswordEncoder(passwordEncoder());
+//        return provider;
 //    }
-
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(customUserDetailService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+
 //    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return authenticationManager();
-//    }
-//
-//    @Bean
-//    public AuthenticationManager authenticationManager() throws Exception {
-//        return new AuthenticationManagerBuilder()
-//                .userDetailsService(customUserDetailService)
-//                .passwordEncoder(passwordEncoder())
-//                .and()
-//                .build();
+//    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+//        log.info("hello");
+//        return authenticationConfiguration.getAuthenticationManager();
 //    }
 
+
     @Bean
-    public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
 
 
-
 }
-
-
-//
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
-//        UserDetails user = User.withDefaultPasswordEncoder().username("user").password("12345").roles("USER").build();
-//
-//        UserDetails admin = User.withDefaultPasswordEncoder().username("admin").password("54321").roles("USER,ADMIN").build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
