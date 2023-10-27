@@ -77,3 +77,5 @@ public class ExpenseService {
         return expenseRepository.findByUserIdAndDateBetween(userService.getLoggedInuser().getId(), start,end);
     }
 }
+
+

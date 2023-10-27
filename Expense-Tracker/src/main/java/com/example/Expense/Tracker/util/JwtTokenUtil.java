@@ -39,4 +39,20 @@ public class JwtTokenUtil {
     public String getUserNameFromToken(String jwtToken){
     return getClaimsFromToken(jwtToken, Claims::getSubject);
     }
+
+    public boolean validateToken(String token, UserDetails userDetails){
+        final String username = getUserNameFromToken(token);
+    
+       return username.equals(userDetails.getUsername()) && !isTokenNotExpired(token);
+       
+    }
+
+    private boolean isTokenNotExpired(String token) {
+        final Date expirationDate = getExpirationDateFromToken(token);
+        return expirationDate.before(new Date());
+    }
+
+    private Date getExpirationDateFromToken(String token) {
+        return getClaimsFromToken(token, Claims::getExpiration);
+    }
 }

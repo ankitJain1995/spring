@@ -1,6 +1,7 @@
-package com.example.Expense.Tracker.repository;
+package com.example.Expense.Tracker.security;
 
 import com.example.Expense.Tracker.model.User;
+import com.example.Expense.Tracker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
