@@ -1,7 +1,41 @@
 package com.example.Blog_App.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import com.example.Blog_App.payloads.CategoryDTO;
+import com.example.Blog_App.service.CategoryServiceImpl;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CategoryController {
+
+    @Autowired
+    private CategoryServiceImpl categoryService;
+
+    @GetMapping("/categ")
+    public List<CategoryDTO> getAllCategories(){
+        return categoryService.getAllCategories();
+    }
+
+    @GetMapping("/cat/{id}")
+    public CategoryDTO getCatById(@PathVariable int id){
+        return categoryService.getCategoryById(id);
+    }
+
+    @PutMapping("/cat/{id}")
+    public CategoryDTO modifyCategory(@Valid @RequestBody CategoryDTO cat, @PathVariable int id){
+        return categoryService.updateCategory(cat,id);
+    }
+
+    @DeleteMapping("/cat/{id}")
+    public void removeCategory(@PathVariable int id){
+        categoryService.deleteCategory(id);
+    }
+
+    @PostMapping("/cat")
+    public CategoryDTO addCategory(@Valid @RequestBody CategoryDTO cat){
+        return categoryService.addCategory(cat);
+    }
 }
