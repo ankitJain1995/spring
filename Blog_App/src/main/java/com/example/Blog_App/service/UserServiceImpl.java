@@ -62,21 +62,13 @@ public class UserServiceImpl implements UserService{
 
     public User dtoToUser(UserDTO dto){
         User user = new User();
-        user.setId(dto.getId());
-        user.setName(dto.getName());
-        user.setAbout(dto.getAbout());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
+        BeanUtils.copyProperties(dto,user);
         return user;
     }
 
     public UserDTO userToUserDTO(User user){
         UserDTO dto = new UserDTO();
-        dto.setId(user.getId());
-        dto.setName(user.getName());
-        dto.setAbout(user.getAbout());
-        dto.setEmail(user.getEmail());
-        dto.setPassword(user.getPassword());
+       BeanUtils.copyProperties(user,dto);
         return dto;
     }
 }

@@ -9,7 +9,7 @@ import lombok.extern.apachecommons.CommonsLog;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "usr_id")
     private int id;
 
