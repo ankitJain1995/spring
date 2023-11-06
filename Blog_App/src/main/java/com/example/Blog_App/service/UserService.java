@@ -1,6 +1,8 @@
 package com.example.Blog_App.service;
 
 import com.example.Blog_App.payloads.UserDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 

@@ -12,11 +12,20 @@ import java.sql.Timestamp;
 @Data
 public class PostDTO {
 
+     private int postId;
+
      private String title;
 
      private String content;
 
      private String imageName;
 
+     private Timestamp createdAt;
+
+     private Timestamp updatedAt;
+
+     private Category category;
+
+     private User user;
 
 }

@@ -8,8 +8,10 @@ public class CategoryDTO {
 
     private int catId;
     @NotEmpty(message = "Titlte must not be empty")
-    private String catTtitle;
+    private String catTitle;
 
     @NotEmpty(message = "Description must not be empty")
     private String catDescription;
+
+
 }

@@ -6,6 +6,9 @@ import com.example.Blog_App.payloads.UserDTO;
 import com.example.Blog_App.repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,10 +48,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDTO> getAllUsers() {
-
         List<User> users = userRepository.findAll();
-        List<UserDTO> usrDto = users.stream().map(user -> (this.userToUserDTO(user))).collect(Collectors.toList());
-        return usrDto;
+        List<UserDTO> dtoList = users.stream().map(user -> userToUserDTO(user)).collect(Collectors.toList());
+        return dtoList;
 
     }
 

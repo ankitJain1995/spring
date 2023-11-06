@@ -2,18 +2,25 @@ package com.example.Blog_App.service;
 
 import com.example.Blog_App.entity.Post;
 import com.example.Blog_App.payloads.PostDTO;
+import com.example.Blog_App.payloads.PostResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface PostService {
 
-    Post addPost(PostDTO postDTO,int user_id,int cat_id);
+    PostDTO addPost(PostDTO postDTO,int user_id,int cat_id);
 
-    Post updatePost(PostDTO postDTO);
+    PostDTO updatePost(PostDTO postDTO,int post_id);
 
-    Post getPostById(int id);
+    PostDTO getPostById(int id);
 
-    List<Post> getAllPost();
+    PostResponse getAllPost(int pageNo, int pageSize);
 
     public void deletePost(int id);
+
+    List<PostDTO> getPostByCategory(int cat_id);
+
+    List<PostDTO> getPostByUser(int usr_id);
 }
