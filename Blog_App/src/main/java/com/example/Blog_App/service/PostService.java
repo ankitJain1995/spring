@@ -16,11 +16,13 @@ public interface PostService {
 
     PostDTO getPostById(int id);
 
-    PostResponse getAllPost(int pageNo, int pageSize);
+    PostResponse getAllPost(int pageNo, int pageSize,String sortBy,String sortDir);
 
     public void deletePost(int id);
 
     List<PostDTO> getPostByCategory(int cat_id);
 
     List<PostDTO> getPostByUser(int usr_id);
+
+    List<PostDTO> getPostByTitle(String title);
 }

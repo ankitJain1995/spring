@@ -1,5 +1,6 @@
 package com.example.Blog_App.controller;
 
+import com.example.Blog_App.config.AppConstants;
 import com.example.Blog_App.entity.Post;
 import com.example.Blog_App.payloads.PostDTO;
 import com.example.Blog_App.payloads.PostResponse;
@@ -39,9 +40,11 @@ public class PostController {
 
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @GetMapping("/post")
-    public PostResponse getAllPosts(@RequestParam(value = "pageNo",defaultValue = "0",required = false) int pageNo,
-                                    @RequestParam(value = "pageSize",defaultValue = "10",required = false) int pageSize){
-        return postService.getAllPost(pageNo,pageSize);
+    public PostResponse getAllPosts(@RequestParam(value = "pageNo",defaultValue = AppConstants.PAGE_NUMBER,required = false) int pageNo,
+                                    @RequestParam(value = "pageSize",defaultValue = AppConstants.PAGE_SIZE,required = false) int pageSize,
+                                    @RequestParam(value = "sortBy",defaultValue = AppConstants.SORT_BY,required = false)String sortBy,
+                                    @RequestParam(value = "sortDir",defaultValue = AppConstants.SORT_DIR,required = false)String sortDir){
+        return postService.getAllPost(pageNo,pageSize,sortBy,sortDir);
     }
 
     @ResponseStatus(value = HttpStatus.ACCEPTED)
@@ -63,6 +66,11 @@ public class PostController {
         postService.deletePost(id);
     }
 
+    //Searching
+    @GetMapping("/post/search/{title}")
+    public List<PostDTO> getPostByKeyword(@PathVariable String title){
+        return postService.getPostByTitle(title);
+    }
 
 }
 

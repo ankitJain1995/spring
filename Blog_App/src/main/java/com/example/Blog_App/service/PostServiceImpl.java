@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -73,8 +74,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-   public PostResponse getAllPost(int pageNo, int pageSize){
-       Pageable p = PageRequest.of(pageNo,pageSize);
+   public PostResponse getAllPost(int pageNo, int pageSize,String sortBy,String sortDir){
+      //Using Ternary Operator
+        Sort sort = (sortDir.equalsIgnoreCase("asc")) ? Sort.by(sortBy).ascending():Sort.by(sortBy).descending();
+
+       Pageable p = PageRequest.of(pageNo,pageSize,sort);
         Page<Post> postList = postRepository.findAll(p);
         List<Post> allPost = postList.getContent();
         List<PostDTO> dtoList = allPost.stream().map((post)->postToDto(post)).collect(Collectors.toList());
@@ -86,8 +90,6 @@ public class PostServiceImpl implements PostService {
        postResponse.setPageSize(postList.getSize());
        postResponse.setTotalPages(postList.getTotalPages());
        return postResponse;
-
-
     }
 
     @Override
@@ -111,6 +113,13 @@ public class PostServiceImpl implements PostService {
     List<Post> postList = postRepository.findByUser(user);
     List<PostDTO> dtoList = postList.stream().map(p->postToDto(p)).collect(Collectors.toList());
     return dtoList;
+    }
+
+    @Override
+    public List<PostDTO> getPostByTitle(String title) {
+        List<Post> postList = postRepository.searchByTitle("%"+title+"%");
+        List<PostDTO> dtoList = postList.stream().map((p)->postToDto(p)).collect(Collectors.toList());
+        return dtoList;
     }
 
     public Post dtoToPost(PostDTO dto){
