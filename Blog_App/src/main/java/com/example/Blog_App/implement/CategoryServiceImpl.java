@@ -1,4 +1,4 @@
-package com.example.Blog_App.service;
+package com.example.Blog_App.implement;
 
 import com.example.Blog_App.entity.Category;
 import com.example.Blog_App.entity.User;
@@ -6,6 +6,7 @@ import com.example.Blog_App.exceptions.ResourceNotFoundException;
 import com.example.Blog_App.payloads.CategoryDTO;
 import com.example.Blog_App.payloads.UserDTO;
 import com.example.Blog_App.repository.CategoryRepository;
+import com.example.Blog_App.service.CategoryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;

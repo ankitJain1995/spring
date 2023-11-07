@@ -1,9 +1,10 @@
-package com.example.Blog_App.service;
+package com.example.Blog_App.implement;
 
 import com.example.Blog_App.entity.User;
 import com.example.Blog_App.exceptions.ResourceNotFoundException;
 import com.example.Blog_App.payloads.UserDTO;
 import com.example.Blog_App.repository.UserRepository;
+import com.example.Blog_App.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;

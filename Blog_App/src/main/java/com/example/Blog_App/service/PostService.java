@@ -25,4 +25,6 @@ public interface PostService {
     List<PostDTO> getPostByUser(int usr_id);
 
     List<PostDTO> getPostByTitle(String title);
+
+    List<PostDTO> getAllPostWithComments();
 }

@@ -1,16 +1,16 @@
-package com.example.Blog_App.service;
+package com.example.Blog_App.implement;
 
+import com.example.Blog_App.config.EntityDTOConverter;
 import com.example.Blog_App.entity.Category;
+import com.example.Blog_App.entity.Comment;
 import com.example.Blog_App.entity.Post;
 import com.example.Blog_App.entity.User;
 import com.example.Blog_App.exceptions.ResourceNotFoundException;
-import com.example.Blog_App.payloads.CategoryDTO;
-import com.example.Blog_App.payloads.PostDTO;
-import com.example.Blog_App.payloads.PostResponse;
-import com.example.Blog_App.payloads.UserDTO;
+import com.example.Blog_App.payloads.*;
 import com.example.Blog_App.repository.CategoryRepository;
 import com.example.Blog_App.repository.PostRepository;
 import com.example.Blog_App.repository.UserRepository;
+import com.example.Blog_App.service.PostService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -81,6 +82,9 @@ public class PostServiceImpl implements PostService {
        Pageable p = PageRequest.of(pageNo,pageSize,sort);
         Page<Post> postList = postRepository.findAll(p);
         List<Post> allPost = postList.getContent();
+        for(Post po :allPost){
+            po.getComments().size();
+        }
         List<PostDTO> dtoList = allPost.stream().map((post)->postToDto(post)).collect(Collectors.toList());
        PostResponse postResponse = new PostResponse();
        postResponse.setPostDto(dtoList);
@@ -122,6 +126,22 @@ public class PostServiceImpl implements PostService {
         return dtoList;
     }
 
+    @Override
+    public List<PostDTO> getAllPostWithComments() {
+        List<Post> posts = postRepository.findAll();
+        return posts.stream()
+                .map(this::convertToPostDTOWithComments)
+                .collect(Collectors.toList());
+    }
+
+    private PostDTO convertToPostDTOWithComments(Post post) {
+        PostDTO postDTO = EntityDTOConverter.convertToPostDTO(post);
+        postDTO.setCommentDTOS(post.getComments().stream()
+                .map(EntityDTOConverter::convertToCommentDTO)
+                .collect(Collectors.toList()));
+        return postDTO;
+    }
+
     public Post dtoToPost(PostDTO dto){
         Post post = new Post();
         BeanUtils.copyProperties(dto,post);
@@ -133,5 +153,16 @@ public class PostServiceImpl implements PostService {
         BeanUtils.copyProperties(post,dto);
         return dto;
     }
+
+//    public PostDTO postToDto(Post post){
+//        PostDTO dto =new PostDTO();
+//        BeanUtils.copyProperties(post,dto);
+//        Set<CommentDTO> commentDTOs = post.getComments().stream().map(this::commentToDto).collect(Collectors.toSet());
+//        dto.setComments(commentDTOs);
+//        return dto;
+//    }
+
+
+
 }
 

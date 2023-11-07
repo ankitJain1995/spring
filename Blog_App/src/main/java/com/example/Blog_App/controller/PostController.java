@@ -1,13 +1,10 @@
 package com.example.Blog_App.controller;
 
 import com.example.Blog_App.config.AppConstants;
-import com.example.Blog_App.entity.Post;
 import com.example.Blog_App.payloads.PostDTO;
 import com.example.Blog_App.payloads.PostResponse;
-import com.example.Blog_App.service.PostServiceImpl;
+import com.example.Blog_App.implement.PostServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -72,5 +69,10 @@ public class PostController {
         return postService.getPostByTitle(title);
     }
 
+
+    @GetMapping("/posts/comments")
+    public List<PostDTO> getPostWithComment(){
+        return postService.getAllPostWithComments();
+    }
 }
 

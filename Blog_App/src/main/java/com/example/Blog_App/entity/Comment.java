@@ -8,27 +8,17 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "post")
-public class Post {
+@Table(name = "comments")
+public class Comment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_Id")
-    private int postId;
+    private long id;
 
-    @Column(name = "post_Title")
-    private String title;
-
-    @Column(name = "post_Content")
-    private String content;
-
-    private String imageName;
+    private String comment;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
@@ -39,15 +29,11 @@ public class Post {
     private Timestamp updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "category_id",nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Category category;
-
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "user_id",nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

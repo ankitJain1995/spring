@@ -1,7 +1,7 @@
 package com.example.Blog_App.controller;
 
 import com.example.Blog_App.payloads.CategoryDTO;
-import com.example.Blog_App.service.CategoryServiceImpl;
+import com.example.Blog_App.implement.CategoryServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;

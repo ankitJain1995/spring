@@ -1,10 +1,9 @@
 package com.example.Blog_App.controller;
 
 import com.example.Blog_App.payloads.UserDTO;
-import com.example.Blog_App.service.UserServiceImpl;
+import com.example.Blog_App.implement.UserServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
