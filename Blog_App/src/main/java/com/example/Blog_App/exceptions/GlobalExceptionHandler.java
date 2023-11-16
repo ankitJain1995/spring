@@ -44,4 +44,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<Object>(objectMap,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EmailExistsException.class)
+    public ResponseEntity<ErrorObject> handleEmailExistsException(Exception ex, WebRequest request){
+
+        ErrorObject error = new ErrorObject();
+        error.setStatusCode(HttpStatus.CONFLICT.value());
+        error.setMessage(ex.getMessage());
+        error.setTimeStamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(error,HttpStatus.CONFLICT);
+
+    }
 }

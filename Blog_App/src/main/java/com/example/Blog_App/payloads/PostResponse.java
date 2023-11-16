@@ -2,6 +2,7 @@ package com.example.Blog_App.payloads;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,5 +19,7 @@ public class PostResponse {
     private int totalPages;
 
     private boolean lastPage;
+
+
 
 }

@@ -1,5 +1,7 @@
 package com.example.Blog_App.controller;
 
+import com.example.Blog_App.entity.Role;
+import com.example.Blog_App.entity.User;
 import com.example.Blog_App.payloads.UserDTO;
 import com.example.Blog_App.implement.UserServiceImpl;
 import jakarta.validation.Valid;
@@ -40,5 +42,14 @@ public class UserController {
     @DeleteMapping("/user/{id}")
     public void removeUser(@PathVariable int id){
         userService.deleteUser(id);
+    }
+
+    @PostMapping("/newAdmin")
+    public User addNewAdmin(@RequestBody User user){
+        return userService.addUserWithAdminRoles(user);
+    }
+
+    public User addNewUser(@RequestBody User user){
+        return userService.addUserWithUserRoles(user);
     }
 }

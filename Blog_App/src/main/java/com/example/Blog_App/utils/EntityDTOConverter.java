@@ -1,4 +1,4 @@
-package com.example.Blog_App.config;
+package com.example.Blog_App.utils;
 
 import com.example.Blog_App.entity.Comment;
 import com.example.Blog_App.entity.Post;

@@ -1,9 +1,12 @@
 package com.example.Blog_App.payloads;
 
+import com.example.Blog_App.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -23,4 +26,6 @@ public class UserDTO {
 
     @NotEmpty(message = "About must not be empty")
     private String about;
+
+    private List<Role> roleList;
 }

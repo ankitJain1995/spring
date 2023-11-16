@@ -1,5 +1,8 @@
 package com.example.Blog_App.service;
 
+import com.example.Blog_App.entity.Role;
+import com.example.Blog_App.entity.User;
+import com.example.Blog_App.exceptions.EmailExistsException;
 import com.example.Blog_App.payloads.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +20,8 @@ public interface UserService {
     List<UserDTO> getAllUsers();
 
     void deleteUser(int usr_id);
+
+    public User addUserWithAdminRoles(User user) throws EmailExistsException;
+
+    public User addUserWithUserRoles(User user) throws EmailExistsException;
 }

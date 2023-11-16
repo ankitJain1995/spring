@@ -1,6 +1,6 @@
 package com.example.Blog_App.controller;
 
-import com.example.Blog_App.config.AppConstants;
+import com.example.Blog_App.utils.AppConstants;
 import com.example.Blog_App.payloads.PostDTO;
 import com.example.Blog_App.payloads.PostResponse;
 import com.example.Blog_App.implement.PostServiceImpl;
