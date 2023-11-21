@@ -56,4 +56,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<ErrorObject>(error,HttpStatus.CONFLICT);
 
     }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ErrorObject> handleInvalidPasswordException(Exception ex,WebRequest request){
+        ErrorObject error = new ErrorObject();
+        error.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        error.setMessage(ex.getMessage());
+        error.setTimeStamp(new Date());
+
+        return new ResponseEntity<ErrorObject>(error,HttpStatus.BAD_REQUEST);
+    }
 }

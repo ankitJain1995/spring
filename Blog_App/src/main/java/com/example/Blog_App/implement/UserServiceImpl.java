@@ -107,6 +107,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user1);
     }
 
+    @Override
+    public List<User> getAllUserRoles() {
+        List<User> users = userRepository.findAll();
+        return users;
+    }
+
     public User dtoToUser(UserDTO dto){
         User user = new User();
         BeanUtils.copyProperties(dto,user);

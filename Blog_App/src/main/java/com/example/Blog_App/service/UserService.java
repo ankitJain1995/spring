@@ -24,4 +24,6 @@ public interface UserService {
     public User addUserWithAdminRoles(User user) throws EmailExistsException;
 
     public User addUserWithUserRoles(User user) throws EmailExistsException;
+
+    List<User> getAllUserRoles();
 }
